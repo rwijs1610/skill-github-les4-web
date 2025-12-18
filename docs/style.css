@@ -20,6 +20,47 @@ body {
     line-height: 1.6;
 }
 
+/* Theme toggle button */
+.theme-toggle {
+    appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    margin-left: 1rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.theme-toggle:hover {
+    background: rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+/* Dark theme overrides (applies when <body> has .dark) */
+body.dark {
+    --text-dark: #f7fafc;
+    --text-light: #cbd5e1;
+    --bg-light: #0f1724;
+    --white: #0b1220;
+    --primary: #8ea8ff;
+    --secondary: #b389ff;
+    background: linear-gradient(135deg, #0b1220 0%, #111827 100%);
+    color: var(--text-dark);
+}
+
+.dark .navbar {
+    background: rgba(5,10,20,0.7);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+.dark .nav-link {
+    color: var(--text-light);
+}
+.dark .footer {
+    background: var(--white);
+    color: var(--text-dark);
+}
+
 /* Navigation */
 .navbar {
     position: fixed;
