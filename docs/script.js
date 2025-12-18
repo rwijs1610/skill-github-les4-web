@@ -105,3 +105,38 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Initialize Christmas tree lights and interactions
+function initTreeLights() {
+    const tree = document.getElementById('christmas-tree');
+    if (!tree) return;
+
+    const ornaments = tree.querySelectorAll('.ornament');
+
+    // Give each ornament a random blink delay and color context
+    ornaments.forEach((el, i) => {
+        const delay = (Math.random() * 1.5).toFixed(2) + 's';
+        el.style.animationDelay = delay;
+        // allow CSS currentColor to use the --c value
+        el.style.color = el.style.getPropertyValue('--c');
+        el.classList.add('blink');
+    });
+
+    // Toggle lights on click (add/remove blinking)
+    let lightsOn = true;
+    tree.addEventListener('click', () => {
+        lightsOn = !lightsOn;
+        if (lightsOn) {
+            tree.classList.remove('lights-off');
+            ornaments.forEach(el => el.classList.add('blink'));
+        } else {
+            tree.classList.add('lights-off');
+            ornaments.forEach(el => el.classList.remove('blink'));
+        }
+    });
+}
+
+// Run when DOM is ready
+document.addEventListener('DOMContentLoaded', initTreeLights);
+// In case script is loaded after DOM
+initTreeLights();
