@@ -139,6 +139,40 @@ body {
     transform: translateY(-1px);
 }
 
+/* Surprise button + message */
+.surprise-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: var(--white);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.surprise-button:hover { transform: translateY(-3px); }
+
+.surprise-message {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.85rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.surprise-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .hero-animation {
     flex: 1;
     position: relative;

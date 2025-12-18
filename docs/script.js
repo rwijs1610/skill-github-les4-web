@@ -59,3 +59,30 @@ document.querySelectorAll('.cta-button').forEach(button => {
         contactSection.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+// Surprise message generator
+(() => {
+    const messages = [
+        'Je ziet er geweldig uit vandaag! 🎄',
+        'Kleine verrassing: vergeet niet te glimlachen 😄',
+        'Een warme kop chocolademelk zou nu goed smaken ☕️',
+        'Stuur iemand vandaag een lief berichtje 💌',
+        'Je hebt iets moois gemaakt — deel het met trots ✨'
+    ];
+
+    const btn = document.querySelector('.surprise-button');
+    const out = document.getElementById('surprise');
+
+    if (!btn || !out) return;
+
+    btn.addEventListener('click', () => {
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        out.textContent = msg;
+        out.hidden = false;
+        // trigger show animation
+        out.classList.add('show');
+        // hide after a while
+        setTimeout(() => out.classList.remove('show'), 4800);
+        setTimeout(() => out.hidden = true, 5200);
+    });
+})();
