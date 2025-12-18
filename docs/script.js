@@ -138,7 +138,7 @@ function initThemeToggle() {
             // ignore storage errors
         }
     });
-});
+};
 
 // Surprise message generator
 (() => {
@@ -166,7 +166,6 @@ function initThemeToggle() {
         setTimeout(() => out.hidden = true, 5200);
     });
 })();
-}
 
 // Initialize theme toggle after DOM is ready
 if (document.readyState === 'loading') {
@@ -355,10 +354,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         if (!dismissed) {
             // show once on load
             const now = new Date();
-            // Show if within Jan 1-7 or user requested via button anytime
-            if ( (now.getMonth()===0 && now.getDate()<=7) || true ) {
+            // Show if within Jan 1-7
+            if (now.getMonth() === 0 && now.getDate() <= 7) {
                 // show small delay so page finishes rendering
-                setTimeout(()=>{ openNewYear(); }, 800);
+                setTimeout(() => { openNewYear(); }, 800);
             }
         }
     }catch(e){}
