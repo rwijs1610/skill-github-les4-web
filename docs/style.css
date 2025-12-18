@@ -257,6 +257,84 @@ body.dark {
     50% { transform: translateY(-30px); }
 }
 
+
+/* Christmas tree styles */
+.christmas-tree {
+    position: absolute;
+    right: 60px;
+    bottom: 20px;
+    width: 240px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    z-index: 3;
+}
+.christmas-tree .star {
+    font-size: 28px;
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255,215,0,0.8);
+    margin-bottom: -6px;
+}
+.christmas-tree .layer {
+    width: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 110px solid #0b6623;
+    margin-top: -24px;
+    transition: transform 0.3s ease;
+}
+.christmas-tree .layer-2 {
+    border-left-width: 90px;
+    border-right-width: 90px;
+    border-bottom-width: 100px;
+    border-bottom-color: #0f7a2a;
+}
+.christmas-tree .layer-3 {
+    border-left-width: 70px;
+    border-right-width: 70px;
+    border-bottom-width: 90px;
+    border-bottom-color: #128a31;
+}
+.christmas-tree .trunk {
+    width: 40px;
+    height: 50px;
+    background: #8b5a2b;
+    border-radius: 6px;
+    margin-top: -6px;
+}
+.christmas-tree .ornaments {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+.ornament {
+    position: absolute;
+    left: var(--left);
+    top: var(--top);
+    width: 14px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--c, #ff5252);
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    opacity: 0.95;
+}
+.ornament.blink {
+    box-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+    animation: blink 1.2s infinite;
+}
+@keyframes blink {
+    0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
+}
+.christmas-tree.lights-off .ornament { opacity: 0.25; filter: grayscale(80%); box-shadow: none; }
+
 @keyframes slideInLeft {
     from {
         opacity: 0;
