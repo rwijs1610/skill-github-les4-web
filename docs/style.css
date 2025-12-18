@@ -338,3 +338,51 @@ body {
         opacity: 0.4;
     }
 }
+
+/* New Year modal + confetti */
+.newyear-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 10020;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+.newyear-modal[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+.newyear-content {
+    background: linear-gradient(180deg, #fff 0%, #f9f9f9 100%);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    position: relative;
+}
+.tree-svg { width: 140px; height: 160px; margin: 0 auto 0.5rem; display:block }
+.newyear-visual { margin-bottom: 0.5rem }
+.newyear-content h2 { margin: 0.5rem 0; color: #0b6623 }
+.newyear-message { color: #333; font-size: 0.95rem; margin-bottom: 1rem }
+.newyear-actions { display:flex; gap:0.5rem; justify-content:center }
+.newyear-actions button { padding:0.5rem 0.9rem; border-radius:8px; border:none; cursor:pointer }
+#open-confetti { background:#0b6623; color: #fff }
+#dismiss-newyear { background:#f0f0f0 }
+.close-newyear { position:absolute; right:8px; top:8px; background:transparent; border:none; font-size:1.1rem; cursor:pointer }
+
+.confetti-root { position:absolute; inset:0; pointer-events:none; overflow:hidden }
+.confetti-piece { position:absolute; width:10px; height:16px; opacity:0.9; transform-origin:center; }
+
+/* Small nav button style */
+#newyear-toggle { background:transparent; border:none; font-size:1.2rem; cursor:pointer }
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-20vh) rotate(0deg); opacity:1 }
+    100% { transform: translateY(120vh) rotate(540deg); opacity:0.8 }
+}

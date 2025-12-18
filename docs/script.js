@@ -52,20 +52,24 @@ window.addEventListener('mousemove', (e) => {
     });
 });
 
-// Create falling snow effect
-function createSnow() {
-    const snowContainer = document.createElement('div');
-    snowContainer.id = 'snow-container';
-    snowContainer.style.position = 'fixed';
-    snowContainer.style.top = '0';
-    snowContainer.style.left = '0';
-    snowContainer.style.width = '100%';
-    snowContainer.style.height = '100%';
-    snowContainer.style.pointerEvents = 'none';
-    snowContainer.style.zIndex = '9999';
-    document.body.appendChild(snowContainer);
+// Snow control (start/stop)
+let _snowInterval = null;
+let _snowContainer = null;
 
-    setInterval(() => {
+function startSnow() {
+    if (_snowInterval) return;
+    _snowContainer = document.createElement('div');
+    _snowContainer.id = 'snow-container';
+    _snowContainer.style.position = 'fixed';
+    _snowContainer.style.top = '0';
+    _snowContainer.style.left = '0';
+    _snowContainer.style.width = '100%';
+    _snowContainer.style.height = '100%';
+    _snowContainer.style.pointerEvents = 'none';
+    _snowContainer.style.zIndex = '10000';
+    document.body.appendChild(_snowContainer);
+
+    _snowInterval = setInterval(() => {
         const snowflake = document.createElement('div');
         snowflake.className = 'snowflake';
         snowflake.style.left = Math.random() * 100 + '%';
@@ -73,15 +77,24 @@ function createSnow() {
         snowflake.style.opacity = Math.random();
         snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
         snowflake.innerHTML = '❄';
-        snowContainer.appendChild(snowflake);
+        _snowContainer.appendChild(snowflake);
 
         setTimeout(() => {
             snowflake.remove();
-        }, 5000);
+        }, 6000);
     }, 200);
 }
 
-createSnow();
+function stopSnow() {
+    if (_snowInterval) {
+        clearInterval(_snowInterval);
+        _snowInterval = null;
+    }
+    if (_snowContainer) {
+        _snowContainer.remove();
+        _snowContainer = null;
+    }
+}
 
 // Christmas countdown
 function updateCountdown() {
@@ -105,3 +118,135 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Christmas lights
+function createLights() {
+    const lights = document.getElementById('lights');
+    if (!lights) return;
+    lights.innerHTML = '';
+    const colors = ['#ffdf00', '#ff3b3b', '#00d1b2', '#ffd1dc', '#9b111e'];
+    const count = Math.floor(window.innerWidth / 40);
+    for (let i = 0; i < count; i++) {
+        const bulb = document.createElement('div');
+        bulb.className = 'bulb';
+        bulb.style.left = (i * (100 / count)) + '%';
+        bulb.style.color = colors[i % colors.length];
+        bulb.style.animation = `bulb-flicker ${1 + Math.random() * 2}s infinite`;
+        bulb.style.animationDelay = (Math.random() * 1) + 's';
+        lights.appendChild(bulb);
+    }
+}
+
+function removeLights() {
+    const lights = document.getElementById('lights');
+    if (lights) lights.innerHTML = '';
+}
+
+function enableChristmas(on) {
+    const btn = document.getElementById('christmas-toggle');
+    const banner = document.getElementById('xmas-banner');
+    if (on) {
+        document.body.classList.add('christmas');
+        if (btn) btn.setAttribute('aria-pressed', 'true');
+        if (banner) banner.style.display = 'block';
+        startSnow();
+        createLights();
+        localStorage.setItem('christmas', 'on');
+    } else {
+        document.body.classList.remove('christmas');
+        if (btn) btn.setAttribute('aria-pressed', 'false');
+        if (banner) banner.style.display = 'none';
+        stopSnow();
+        removeLights();
+        localStorage.setItem('christmas', 'off');
+    }
+}
+
+// Wire the toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('christmas-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        const isOn = document.body.classList.contains('christmas');
+        enableChristmas(!isOn);
+    });
+
+    const saved = localStorage.getItem('christmas');
+    if (saved === 'on') enableChristmas(true);
+});
+
+// New Year modal + confetti
+function openNewYear() {
+    const modal = document.getElementById('newyear-modal');
+    if (!modal) return;
+    modal.setAttribute('aria-hidden', 'false');
+    // create initial confetti burst
+    burstConfetti(60);
+}
+
+function closeNewYear() {
+    const modal = document.getElementById('newyear-modal');
+    if (!modal) return;
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function createConfettiPiece(x, color) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.background = color;
+    el.style.left = x + '%';
+    el.style.top = (-10 - Math.random() * 10) + 'vh';
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    el.style.width = (6 + Math.random() * 10) + 'px';
+    el.style.height = (10 + Math.random() * 12) + 'px';
+    el.style.borderRadius = (Math.random()*3)+'px';
+    const duration = 2500 + Math.random()*2000;
+    el.style.animation = `confetti-fall ${duration}ms linear forwards`;
+    el.style.left = (Math.random()*100) + '%';
+    return el;
+}
+
+function burstConfetti(amount=40) {
+    const root = document.getElementById('confetti-root');
+    if (!root) return;
+    const colors = ['#ff3b3b','#ffd700','#00d1b2','#9b111e','#ff8a00','#00a3ff'];
+    for (let i=0;i<amount;i++){
+        const piece = createConfettiPiece(Math.random()*100, colors[i%colors.length]);
+        root.appendChild(piece);
+        // remove after animation
+        setTimeout(()=>{ piece.remove(); }, 6000 + Math.random()*2000);
+    }
+}
+
+// Wire New Year buttons
+document.addEventListener('click', (e)=>{
+    if (e.target && e.target.id === 'newyear-toggle') {
+        openNewYear();
+    }
+    if (e.target && e.target.id === 'close-newyear') {
+        closeNewYear();
+    }
+    if (e.target && e.target.id === 'open-confetti') {
+        burstConfetti(120);
+    }
+    if (e.target && e.target.id === 'dismiss-newyear') {
+        closeNewYear();
+        try{ localStorage.setItem('newyear-dismissed','1'); }catch(e){}
+    }
+});
+
+// Auto-show unless dismissed
+document.addEventListener('DOMContentLoaded', ()=>{
+    try{
+        const dismissed = localStorage.getItem('newyear-dismissed');
+        if (!dismissed) {
+            // show once on load
+            const now = new Date();
+            // Show if within Jan 1-7 or user requested via button anytime
+            if ( (now.getMonth()===0 && now.getDate()<=7) || true ) {
+                // show small delay so page finishes rendering
+                setTimeout(()=>{ openNewYear(); }, 800);
+            }
+        }
+    }catch(e){}
+});
