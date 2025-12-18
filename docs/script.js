@@ -83,6 +83,57 @@ function createSnow() {
 
 createSnow();
 
+// Theme (dark mode) toggle with persistence
+function applyTheme(theme) {
+    const toggle = document.getElementById('theme-toggle');
+    if (theme === 'dark') {
+        document.body.classList.add('dark');
+        if (toggle) {
+            toggle.setAttribute('aria-pressed', 'true');
+            toggle.textContent = '☀️';
+        }
+    } else {
+        document.body.classList.remove('dark');
+        if (toggle) {
+            toggle.setAttribute('aria-pressed', 'false');
+            toggle.textContent = '🌙';
+        }
+    }
+}
+
+function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    // Determine initial theme: stored preference > system preference > light
+    const stored = localStorage.getItem('theme');
+    if (stored) {
+        applyTheme(stored);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+    } else {
+        applyTheme('light');
+    }
+
+    if (!toggle) return;
+
+    toggle.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark');
+        const newTheme = isDark ? 'dark' : 'light';
+        applyTheme(newTheme);
+        try {
+            localStorage.setItem('theme', newTheme);
+        } catch (e) {
+            // ignore storage errors
+        }
+    });
+}
+
+// Initialize theme toggle after DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle);
+} else {
+    initThemeToggle();
+}
+
 // Christmas countdown
 function updateCountdown() {
     const now = new Date();
