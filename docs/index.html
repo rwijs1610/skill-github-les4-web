@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Studio</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">kerst site</div>
+            <!-- Theme toggle -->
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">🌙</button>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active">deon</a></li> //zet hier je eigen naam neer
-                <li><a href="#about" class="nav-link">ik eet veel en ben gezelliger dan normaal</a></li>
-                <li><a href="#portfolio" class="nav-link">niks</a></li>
-                <li><a href="#contact" class="nav-link">niks</a></li>
+                <li><a href="#home" class="nav-link active"></a></li>
+                <li><a href="#about" class="nav-link">wij</a></li>
+                <li><a href="#portfolio" class="nav-link">onze kerst</a></li>
+                <li><div class="nav-actions">
+                    <button id="newyear-toggle" title="С новым годом!">🎉</button>
+                </div></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">   //dit is voor mij 
+    <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="hero-title"></h1>
-            <p class="hero-subtitle"></p>
+            <h1 class="hero-title">KERST</h1>
+            <p class="hero-subtitle">dit is onze kerst </p>
+            <div id="countdown" class="countdown">
+                <h3>Tijd tot Kerstmis:</h3>
+                <div class="countdown-timer">
+                    <span id="days">0</span> dagen <span id="hours">0</span> uren <span id="minutes">0</span> minuten <span id="seconds">0</span> seconden
+                </div>
+              
             <button class="surprise-button">Surprise me!</button>
             <div id="surprise" class="surprise-message" hidden></div>
+            </div>
         </div>
         <div class="hero-animation">
             <div class="orb orb-1"></div>
@@ -36,50 +49,60 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about"> // vul hier eigen info in  gebrijk een card 
+    <section id="about" class="about">
         <h2>About Us</h2>
         <div class="about-grid">
             <div class="about-card">
                 <div class="card-icon"></div>
-                <h3></h3>
-                <p></p>
+                <h3>ik ga lekker veel eten tijdens kerst</h3>
+                <p>Kyano</p>
             </div>
             <div class="about-card">
                 <div class="card-icon"></div>
-                <h3></h3>
-                <p></p>
+                <h3>ik praat veel en ben gezellig</h3>
+                <p>Ian</p>
             </div>
             <div class="about-card">
                 <div class="card-icon"></div>
-                <h3></h3>
-                <p></p>
+                <h3>ik eet veel en ben gezeliger</h3>
+                <p>Deon</p>
+            </div>
+            <div class="about-card">
+                <div class="card-icon"></div>
+                <h3>Ben dan meestal met familie</h3>
+                <p>Rens</p>
+            </div>
+            <div class="about-card">
+                <div class="card-icon"></div>
+                <h3>kadeautjes weg geven</h3>
+                <p>Marcus</p>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio"> // zet hier je eigen werk neer gebruik een item
-        <h2>Oonze kerst</h2>
+    <section id="portfolio" class="portfolio">
+        <h2>wat doe je het liefst </h2>
         <div class="portfolio-grid">
             <div class="portfolio-item">
-                <div class="portfolio-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"></div>
-                <h3>doen</h3>
-                <p>eten</p>
+                <h3>ik zou graag naar huis willen</h3>
+                <p>Kyano</p>
             </div>
             <div class="portfolio-item">
-                <div class="portfolio-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"></div>
-                <h3></h3>
-                <p></p>
+                <h3>slapen</h3>
+                <p>Ian</p>
             </div>
             <div class="portfolio-item">
-                <div class="portfolio-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"></div>
-                <h3></h3>
-                <p></p>
+                <h3>thuis zijn chillen beetje trekken </h3>
+                <p>Deon</p>
             </div>
             <div class="portfolio-item">
-                <div class="portfolio-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"></div>
-                <h3></h3>
-                <p></p>
+                <h3>Gezeligheid</h3>
+                <p>Rens</p>
+            </div>
+            <div class="portfolio-item">
+                <h3>Muziek luisteren met familie</h3>
+                <p>Marcus</p>
             </div>
         </div>
     </section>
@@ -89,6 +112,32 @@
         <p>&copy; onze kerst. </p>
     </footer>
 
+    <!-- New Year modal -->
+    <div id="newyear-modal" class="newyear-modal" aria-hidden="true">
+        <div class="newyear-content" role="dialog" aria-modal="true" aria-labelledby="newyear-title">
+            <button class="close-newyear" id="close-newyear" aria-label="Close">✕</button>
+            <div class="newyear-visual">
+                <!-- Simple SVG tree -->
+                <svg viewBox="0 0 120 140" class="tree-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ёлочка">
+                    <rect x="50" y="110" width="20" height="20" fill="#8B5A2B" />
+                    <polygon points="60,10 20,80 100,80" fill="#0b6623" />
+                    <polygon points="60,35 28,95 92,95" fill="#0f8a2e" />
+                    <circle cx="60" cy="60" r="3" fill="#ffd700" />
+                    <circle cx="45" cy="75" r="3" fill="#ff3b3b" />
+                    <circle cx="75" cy="75" r="3" fill="#00d1b2" />
+                </svg>
+            </div>
+            <h2 id="newyear-title">Gelukkig nieuwjaar!</h2>
+            <p class="newyear-message">Moge het nieuwe jaar u en uw familie meer vreugde, succes, warmte en geluk brengen!</p>
+            <div class="newyear-actions">
+                <button id="open-confetti">Vieren</button>
+                <button id="dismiss-newyear">Later</button>
+            </div>
+            <div id="confetti-root" class="confetti-root" aria-hidden="true"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-* {
+    * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -18,6 +18,47 @@ body {
     background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
     color: var(--text-dark);
     line-height: 1.6;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    margin-left: 1rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.theme-toggle:hover {
+    background: rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+/* Dark theme overrides (applies when <body> has .dark) */
+body.dark {
+    --text-dark: #f7fafc;
+    --text-light: #cbd5e1;
+    --bg-light: #0f1724;
+    --white: #0b1220;
+    --primary: #8ea8ff;
+    --secondary: #b389ff;
+    background: linear-gradient(135deg, #0b1220 0%, #111827 100%);
+    color: var(--text-dark);
+}
+
+.dark .navbar {
+    background: rgba(5,10,20,0.7);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+.dark .nav-link {
+    color: var(--text-light);
+}
+.dark .footer {
+    background: var(--white);
+    color: var(--text-dark);
 }
 
 /* Navigation */
@@ -117,26 +158,21 @@ body {
     margin-bottom: 2rem;
 }
 
-.cta-button {
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: var(--white);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+.countdown {
+    margin-top: 2rem;
+    text-align: center;
 }
 
-.cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+.countdown h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
 }
 
-.cta-button:active {
-    transform: translateY(-1px);
+.countdown-timer {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
 }
 
 /* Surprise button + message */
@@ -240,8 +276,7 @@ body {
 }
 
 .about h2,
-.portfolio h2,
-.contact h2 {
+.portfolio h2 {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 3rem;
@@ -253,8 +288,8 @@ body {
 
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template: 5fr / repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;  
 }
 
 .about-card {
@@ -296,7 +331,7 @@ body {
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template: 4fr / repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
 }
 
@@ -305,16 +340,13 @@ body {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.portfolio-image {
-    width: 100%;
-    height: 250px;
-    transition: transform 0.3s ease;
-}
-
-.portfolio-item:hover .portfolio-image {
-    transform: scale(1.05);
+.portfolio-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .portfolio-item h3 {
@@ -328,20 +360,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Contact Section */
-.contact {
-    padding: 6rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.contact p {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-}
-
 /* Footer */
 .footer {
     background: var(--text-dark);
@@ -349,6 +367,20 @@ body {
     text-align: center;
     padding: 2rem;
     font-size: 0.9rem;
+}
+
+/* Snow effect */
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: white;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
 }
 
 /* Responsive */
@@ -373,12 +405,59 @@ body {
     }
 
     .about h2,
-    .portfolio h2,
-    .contact h2 {
+    .portfolio h2 {
         font-size: 2rem;
     }
 
     .orb-1, .orb-2, .orb-3 {
         opacity: 0.4;
     }
+}
+
+/* New Year modal + confetti */
+.newyear-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 10020;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+.newyear-modal[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+.newyear-content {
+    background: linear-gradient(180deg, #fff 0%, #f9f9f9 100%);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    position: relative;
+}
+.tree-svg { width: 140px; height: 160px; margin: 0 auto 0.5rem; display:block }
+.newyear-visual { margin-bottom: 0.5rem }
+.newyear-content h2 { margin: 0.5rem 0; color: #0b6623 }
+.newyear-message { color: #333; font-size: 0.95rem; margin-bottom: 1rem }
+.newyear-actions { display:flex; gap:0.5rem; justify-content:center }
+.newyear-actions button { padding:0.5rem 0.9rem; border-radius:8px; border:none; cursor:pointer }
+#open-confetti { background:#0b6623; color: #fff }
+#dismiss-newyear { background:#f0f0f0 }
+.close-newyear { position:absolute; right:8px; top:8px; background:transparent; border:none; font-size:1.1rem; cursor:pointer }
+
+.confetti-root { position:absolute; inset:0; pointer-events:none; overflow:hidden }
+.confetti-piece { position:absolute; width:10px; height:16px; opacity:0.9; transform-origin:center; }
+
+/* Small nav button style */
+#newyear-toggle { background:transparent; border:none; font-size:1.2rem; cursor:pointer }
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-20vh) rotate(0deg); opacity:1 }
+    100% { transform: translateY(120vh) rotate(540deg); opacity:0.8 }
 }
